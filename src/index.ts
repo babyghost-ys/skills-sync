@@ -5,6 +5,7 @@ import { runSync } from "./commands/sync";
 import { runStatus } from "./commands/status";
 import { runUnlink } from "./commands/unlink";
 import { runInit } from "./commands/init";
+import { runUninstall } from "./commands/uninstall";
 
 const program = new Command();
 
@@ -57,6 +58,17 @@ program
   .description("Initialise config and source directory")
   .action(async () => {
     await runInit();
+  });
+
+// Uninstall command
+program
+  .command("uninstall")
+  .description("Uninstall skills-sync (unlink global command)")
+  .option("--purge", "Also remove ~/.skills-sync/ folder including all skills and config")
+  .action(async (options) => {
+    await runUninstall({
+      purge: options.purge,
+    });
   });
 
 program.parse();
