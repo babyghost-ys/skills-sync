@@ -1,6 +1,6 @@
 import { join } from "path";
 import pc from "picocolors";
-import { loadConfig, getEnabledTargets, ConfigNotFoundError, sourceExists } from "../config";
+import { loadConfig, getEnabledTargets, ConfigNotFoundError, sourceExists, isSkillExcluded } from "../config";
 import { getSkillFolders, createSymlink } from "../symlink";
 import { getSourceDir, shortenPath } from "../utils/paths";
 import { logger } from "../utils/logger";
@@ -84,6 +84,13 @@ export async function runSync(options: SyncOptions = {}): Promise<void> {
     const sourcePath = join(sourceDir, skillName);
 
     for (const [targetName, targetConfig] of Object.entries(targets)) {
+      // Check if skill is excluded from this target
+      if (isSkillExcluded(config, skillName, targetName)) {
+        logger.info(`${targetName}: excluded`);
+        skipped++;
+        continue;
+      }
+
       const targetPath = join(targetConfig.path, skillName);
 
       try {

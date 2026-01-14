@@ -6,6 +6,7 @@ import { runStatus } from "./commands/status";
 import { runUnlink } from "./commands/unlink";
 import { runInit } from "./commands/init";
 import { runUninstall } from "./commands/uninstall";
+import { runExclude, runInclude } from "./commands/exclude";
 
 const program = new Command();
 
@@ -69,6 +70,22 @@ program
     await runUninstall({
       purge: options.purge,
     });
+  });
+
+// Exclude command
+program
+  .command("exclude <skill> <target>")
+  .description("Exclude a skill from syncing to a target (e.g., skills-sync exclude frontend-design claude)")
+  .action(async (skill, target) => {
+    await runExclude(skill, { target });
+  });
+
+// Include command
+program
+  .command("include <skill> <target>")
+  .description("Include a skill back for a target (e.g., skills-sync include frontend-design claude)")
+  .action(async (skill, target) => {
+    await runInclude(skill, { target });
   });
 
 program.parse();

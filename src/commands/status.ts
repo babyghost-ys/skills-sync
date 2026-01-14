@@ -1,6 +1,6 @@
 import { join } from "path";
 import pc from "picocolors";
-import { loadConfig, getEnabledTargets, ConfigNotFoundError, sourceExists } from "../config";
+import { loadConfig, getEnabledTargets, ConfigNotFoundError, sourceExists, isSkillExcluded } from "../config";
 import { getSkillFolders, checkSymlinkStatus } from "../symlink";
 import { getSourceDir, shortenPath } from "../utils/paths";
 import { logger } from "../utils/logger";
@@ -54,6 +54,7 @@ export async function runStatus(): Promise<void> {
   // Track statistics
   let synced = 0;
   let notSynced = 0;
+  let excluded = 0;
   let conflicts = 0;
   let broken = 0;
 
@@ -64,6 +65,13 @@ export async function runStatus(): Promise<void> {
     const sourcePath = join(sourceDir, skillName);
 
     for (const [targetName, targetConfig] of Object.entries(targets)) {
+      // Check if skill is excluded from this target
+      if (isSkillExcluded(config, skillName, targetName)) {
+        console.log(`    ${targetName}: ${pc.dim("excluded")}`);
+        excluded++;
+        continue;
+      }
+
       const targetPath = join(targetConfig.path, skillName);
 
       try {
@@ -99,6 +107,7 @@ export async function runStatus(): Promise<void> {
   const parts: string[] = [];
   if (synced > 0) parts.push(pc.green(`${synced} synced`));
   if (notSynced > 0) parts.push(pc.red(`${notSynced} not synced`));
+  if (excluded > 0) parts.push(pc.dim(`${excluded} excluded`));
   if (conflicts > 0) parts.push(pc.yellow(`${conflicts} conflict${conflicts !== 1 ? "s" : ""}`));
   if (broken > 0) parts.push(pc.yellow(`${broken} broken`));
 
