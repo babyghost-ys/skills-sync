@@ -17,13 +17,13 @@ Add your custom AI coding rules and instructions here. This file will be synced 
 
 ## Usage
 
-1. Edit this file or create new skill folders in \`~/.skills-sync/\`
+1. Edit this file or create new skill folders in \`~/.skills-sync/skills/\`
 2. Run \`skills-sync\` to sync your skills to Claude, Gemini, etc.
 3. Run \`skills-sync status\` to check sync status
 
 ## Tips
 
-- Each folder in \`~/.skills-sync/\` becomes a skill
+- Each folder in \`~/.skills-sync/skills/\` becomes a skill
 - Name folders descriptively (e.g., \`typescript-rules\`, \`code-review\`, \`debugging\`)
 - Use \`SKILL.md\` or any markdown file for your instructions
 `;

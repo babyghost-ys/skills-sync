@@ -19,17 +19,24 @@ export function resolvePath(path: string): string {
 }
 
 /**
+ * Get the skills-sync base directory
+ */
+export function getBaseDir(): string {
+  return resolvePath("~/.skills-sync");
+}
+
+/**
  * Get the default skills-sync source directory
  */
 export function getSourceDir(): string {
-  return resolvePath("~/.skills-sync");
+  return join(getBaseDir(), "skills");
 }
 
 /**
  * Get the config file path
  */
 export function getConfigPath(): string {
-  return join(getSourceDir(), "config.yaml");
+  return join(getBaseDir(), "config.yaml");
 }
 
 /**

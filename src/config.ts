@@ -22,14 +22,6 @@ const DEFAULT_CONFIG: Config = {
       path: "~/.gemini/skills",
       enabled: true,
     },
-    cursor: {
-      path: ".cursor/rules",
-      enabled: false,
-    },
-    copilot: {
-      path: ".github/copilot-instructions.md",
-      enabled: false,
-    },
   },
   exclude: [".git", ".DS_Store", "node_modules", "config.yaml"],
 };
