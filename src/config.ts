@@ -48,11 +48,14 @@ export function loadConfig(): Config {
     const content = readFileSync(configPath, "utf-8");
     const parsed = parse(content) as Partial<Config>;
 
-    // Merge targets with defaults, ensuring exclude arrays exist
+    // Use targets from config file only (don't merge with defaults)
+    // Only fall back to defaults if no targets are defined at all
     const targets: Record<string, TargetConfig> = {};
-    const mergedTargets = { ...DEFAULT_CONFIG.targets, ...parsed.targets };
+    const configTargets = parsed.targets && Object.keys(parsed.targets).length > 0
+      ? parsed.targets
+      : DEFAULT_CONFIG.targets;
 
-    for (const [name, target] of Object.entries(mergedTargets)) {
+    for (const [name, target] of Object.entries(configTargets)) {
       targets[name] = {
         ...target,
         exclude: target.exclude ?? [],
