@@ -34,17 +34,16 @@ skills-sync
 
 ## Commands
 
-### `skills-sync` or `skills-sync sync`
+### `skills-sync`
 
 Sync all skills to all enabled targets.
 
 ```bash
-skills-sync                         # Sync all skills to all targets
-skills-sync sync                    # Same as above
-skills-sync sync -s my-skill        # Sync specific skill only
-skills-sync sync -t claude          # Sync to specific target only
-skills-sync sync -d                 # Dry run (preview changes)
-skills-sync sync -f                 # Force replace conflicting symlinks
+skills-sync                   # Sync all skills to all targets
+skills-sync -s my-skill       # Sync specific skill only
+skills-sync -t claude         # Sync to specific target only
+skills-sync -d                # Dry run (preview changes)
+skills-sync -f                # Force replace conflicting symlinks
 ```
 
 When you delete a skill from the source folder, running `skills-sync` will automatically clean up the orphaned symlinks from all targets.
