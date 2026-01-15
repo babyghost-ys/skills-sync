@@ -53,10 +53,7 @@ export async function runAddTarget(targetName: string): Promise<void> {
 /**
  * Remove a target from the config
  */
-export async function runRemoveTarget(
-  targetName: string,
-  options: { keepSymlinks?: boolean } = {}
-): Promise<void> {
+export async function runRemoveTarget(targetName: string): Promise<void> {
   if (!configExists()) {
     logger.error("Configuration not found. Run 'skills-sync init' first.");
     process.exit(1);
@@ -71,12 +68,10 @@ export async function runRemoveTarget(
     process.exit(1);
   }
 
-  // Unlink symlinks for this target first (unless --keep-symlinks)
-  if (!options.keepSymlinks) {
-    logger.section(`Removing symlinks for '${targetName}'...`);
-    await runUnlink({ target: targetName });
-    console.log("");
-  }
+  // Unlink symlinks for this target first
+  logger.section(`Removing symlinks for '${targetName}'...`);
+  await runUnlink({ target: targetName });
+  console.log("");
 
   // Remove the target from config
   delete config.targets[targetName];

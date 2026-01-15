@@ -101,9 +101,8 @@ program
 program
   .command("remove <target>")
   .description("Remove a target from config (e.g., skills-sync remove gemini)")
-  .option("--keep-symlinks", "Keep existing symlinks when removing target")
-  .action(async (target, options) => {
-    await runRemoveTarget(target, { keepSymlinks: options.keepSymlinks });
+  .action(async (target) => {
+    await runRemoveTarget(target);
   });
 
 // List targets command
