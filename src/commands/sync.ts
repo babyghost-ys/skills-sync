@@ -1,7 +1,8 @@
 import { join } from "path";
+import { unlink } from "fs/promises";
 import pc from "picocolors";
 import { loadConfig, getEnabledTargets, ConfigNotFoundError, sourceExists, isSkillExcluded } from "../config";
-import { getSkillFolders, createSymlink } from "../symlink";
+import { getSkillFolders, createSymlink, findOrphanedSymlinks } from "../symlink";
 import { getSourceDir, shortenPath } from "../utils/paths";
 import { logger } from "../utils/logger";
 
@@ -76,6 +77,7 @@ export async function runSync(options: SyncOptions = {}): Promise<void> {
   let skipped = 0;
   let warnings = 0;
   let errors = 0;
+  let removed = 0;
 
   // Sync each skill folder
   for (const skillName of skillFolders) {
@@ -122,8 +124,31 @@ export async function runSync(options: SyncOptions = {}): Promise<void> {
     }
   }
 
+  // Clean up orphaned symlinks (only when not filtering by skill)
+  if (!filterSkill) {
+    for (const [targetName, targetConfig] of Object.entries(targets)) {
+      const orphaned = await findOrphanedSymlinks(targetConfig.path, skillFolders);
+
+      for (const { name, targetPath } of orphaned) {
+        try {
+          if (dryRun) {
+            logger.info(`${pc.dim("orphaned")} ${name}: would remove from ${targetName}`);
+          } else {
+            await unlink(targetPath);
+            logger.success(`${pc.dim("orphaned")} ${name}: removed from ${targetName}`);
+          }
+          removed++;
+        } catch (error) {
+          const message = error instanceof Error ? error.message : String(error);
+          logger.error(`${pc.dim("orphaned")} ${name}: failed to remove - ${message}`);
+          errors++;
+        }
+      }
+    }
+  }
+
   // Print summary
-  logger.summary(created, skipped, warnings, errors);
+  logger.summary(created, skipped, warnings, errors, removed);
 
   if (dryRun && created > 0) {
     console.log(pc.dim("\nRun without --dry-run to apply changes."));

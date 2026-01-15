@@ -65,10 +65,11 @@ export const logger = {
     skipped: number,
     warnings: number,
     errors: number = 0,
-    createdLabel: string = "created"
+    removed: number = 0
   ): void {
     const parts: string[] = [];
-    if (created > 0) parts.push(pc.green(`${created} ${createdLabel}`));
+    if (created > 0) parts.push(pc.green(`${created} created`));
+    if (removed > 0) parts.push(pc.magenta(`${removed} removed`));
     if (skipped > 0) parts.push(pc.blue(`${skipped} skipped`));
     if (warnings > 0) parts.push(pc.yellow(`${warnings} warning${warnings > 1 ? "s" : ""}`));
     if (errors > 0) parts.push(pc.red(`${errors} error${errors > 1 ? "s" : ""}`));

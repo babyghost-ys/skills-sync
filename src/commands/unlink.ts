@@ -111,8 +111,8 @@ export async function runUnlink(options: UnlinkOptions = {}): Promise<void> {
     }
   }
 
-  // Print summary
-  logger.summary(removed, skipped, warnings, errors, "removed");
+  // Print summary (0 created, removed goes in the removed slot)
+  logger.summary(0, skipped, warnings, errors, removed);
 
   if (dryRun && removed > 0) {
     console.log(pc.dim("\nRun without --dry-run to apply changes."));

@@ -190,3 +190,52 @@ async function ensureParentDir(filePath: string): Promise<void> {
     await mkdir(dir, { recursive: true });
   }
 }
+
+/**
+ * Find orphaned symlinks in a target directory
+ * These are symlinks that point to our source directory but the source no longer exists
+ */
+export async function findOrphanedSymlinks(
+  targetDir: string,
+  existingSkills: string[]
+): Promise<{ name: string; targetPath: string }[]> {
+  const sourceDir = getSourceDir();
+  const orphaned: { name: string; targetPath: string }[] = [];
+
+  if (!existsSync(targetDir)) {
+    return orphaned;
+  }
+
+  try {
+    const entries = await readdir(targetDir, { withFileTypes: true });
+
+    for (const entry of entries) {
+      const targetPath = join(targetDir, entry.name);
+
+      // Only check symlinks
+      if (!entry.isSymbolicLink()) continue;
+
+      try {
+        const linkTarget = await readlink(targetPath);
+
+        // Check if this symlink points to our source directory
+        if (linkTarget.startsWith(sourceDir + "/") || linkTarget.startsWith(sourceDir + "\\")) {
+          // Extract the skill name from the link target
+          const relativePath = linkTarget.slice(sourceDir.length + 1);
+          const skillName = relativePath.split("/")[0] || relativePath.split("\\")[0];
+
+          // If this skill no longer exists in our source, it's orphaned
+          if (!existingSkills.includes(skillName)) {
+            orphaned.push({ name: entry.name, targetPath });
+          }
+        }
+      } catch {
+        // Could not read symlink, skip
+      }
+    }
+  } catch {
+    // Could not read directory, skip
+  }
+
+  return orphaned;
+}
