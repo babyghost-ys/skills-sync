@@ -25,6 +25,11 @@ const DEFAULT_CONFIG: Config = {
       enabled: true,
       exclude: [],
     },
+    opencode: {
+      path: "~/.config/opencode/skill",
+      enabled: true,
+      exclude: [],
+    },
   },
   exclude: [".git", ".DS_Store", "node_modules", "config.yaml"],
 };
