@@ -100,7 +100,7 @@ export function saveConfig(config: Config): void {
   }
 
   const yamlContent = `# skills-sync configuration
-# See https://github.com/your-repo/skills-sync for documentation
+# See https://github.com/babyghost-ys/skills-sync for documentation
 
 ${stringify(cleanConfig, { indent: 2, lineWidth: 0 })}`;
 

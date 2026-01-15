@@ -14,7 +14,7 @@ Requires [Bun](https://bun.sh/) runtime.
 
 ```bash
 # Clone the repository
-git clone https://github.com/peterleung/skills-sync.git
+git clone https://github.com/babyghost-ys/skills-sync.git
 cd skills-sync
 
 # Run the install script

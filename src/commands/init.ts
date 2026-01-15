@@ -64,7 +64,7 @@ function generateConfigYaml(config: ReturnType<typeof getDefaultConfig>): string
   });
 
   return `# skills-sync configuration
-# See https://github.com/your-repo/skills-sync for documentation
+# See https://github.com/babyghost-ys/skills-sync for documentation
 
 ${yaml}`;
 }
