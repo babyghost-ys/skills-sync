@@ -16,33 +16,19 @@ program
   .description("Synchronise AI coding assistant skills from a centralised location")
   .version("0.1.0")
   .allowExcessArguments(false)
-  .allowUnknownOption(false);
-
-// Sync command (also the default when no command is specified)
-const syncAction = async (options: { skill?: string; target?: string; dryRun?: boolean; force?: boolean }) => {
-  await runSync({
-    skill: options.skill,
-    target: options.target,
-    dryRun: options.dryRun,
-    force: options.force,
-  });
-};
-
-// Default action (no command)
-program
-  .action(async () => {
-    await syncAction(program.opts());
-  });
-
-// Explicit sync command
-program
-  .command("sync")
-  .description("Sync all skills to all targets")
+  .allowUnknownOption(false)
   .option("-s, --skill <name>", "Sync specific skill folder only")
   .option("-t, --target <name>", "Sync to specific target only (e.g., claude, gemini)")
   .option("-d, --dry-run", "Show what would happen without making changes")
   .option("-f, --force", "Force replace existing symlinks pointing elsewhere")
-  .action(syncAction);
+  .action(async (options) => {
+    await runSync({
+      skill: options.skill,
+      target: options.target,
+      dryRun: options.dryRun,
+      force: options.force,
+    });
+  });
 
 // Status command
 program
