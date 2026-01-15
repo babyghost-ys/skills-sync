@@ -7,6 +7,7 @@ import { runUnlink } from "./commands/unlink";
 import { runInit } from "./commands/init";
 import { runUninstall } from "./commands/uninstall";
 import { runExclude, runInclude } from "./commands/exclude";
+import { runAddTarget, runRemoveTarget, runListTargets } from "./commands/target";
 
 const program = new Command();
 
@@ -86,6 +87,31 @@ program
   .description("Include a skill back for a target (e.g., skills-sync include frontend-design claude)")
   .action(async (skill, target) => {
     await runInclude(skill, { target });
+  });
+
+// Add target command
+program
+  .command("add <target>")
+  .description("Add a preset target to config (e.g., skills-sync add opencode)")
+  .action(async (target) => {
+    await runAddTarget(target);
+  });
+
+// Remove target command
+program
+  .command("remove <target>")
+  .description("Remove a target from config (e.g., skills-sync remove gemini)")
+  .option("--keep-symlinks", "Keep existing symlinks when removing target")
+  .action(async (target, options) => {
+    await runRemoveTarget(target, { keepSymlinks: options.keepSymlinks });
+  });
+
+// List targets command
+program
+  .command("targets")
+  .description("List available preset targets")
+  .action(() => {
+    runListTargets();
   });
 
 program.parse();

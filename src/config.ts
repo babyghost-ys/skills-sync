@@ -13,24 +13,29 @@ export interface Config {
   exclude: string[]; // Global exclusions (system files like .git, .DS_Store)
 }
 
-const DEFAULT_CONFIG: Config = {
-  targets: {
-    claude: {
-      path: "~/.claude/skills",
-      enabled: true,
-      exclude: [],
-    },
-    gemini: {
-      path: "~/.gemini/skills",
-      enabled: true,
-      exclude: [],
-    },
-    opencode: {
-      path: "~/.config/opencode/skill",
-      enabled: true,
-      exclude: [],
-    },
+/**
+ * Preset target configurations that users can add via `skills-sync add <target>`
+ */
+export const PRESET_TARGETS: Record<string, TargetConfig> = {
+  claude: {
+    path: "~/.claude/skills",
+    enabled: true,
+    exclude: [],
   },
+  gemini: {
+    path: "~/.gemini/skills",
+    enabled: true,
+    exclude: [],
+  },
+  opencode: {
+    path: "~/.config/opencode/skill",
+    enabled: true,
+    exclude: [],
+  },
+};
+
+const DEFAULT_CONFIG: Config = {
+  targets: PRESET_TARGETS,
   exclude: [".git", ".DS_Store", "node_modules", "config.yaml"],
 };
 
