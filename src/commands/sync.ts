@@ -126,21 +126,32 @@ export async function runSync(options: SyncOptions = {}): Promise<void> {
 
   // Clean up orphaned symlinks (only when not filtering by skill)
   if (!filterSkill) {
+    // Collect all orphaned symlinks first
+    const allOrphaned: { name: string; targetPath: string; targetName: string }[] = [];
+
     for (const [targetName, targetConfig] of Object.entries(targets)) {
       const orphaned = await findOrphanedSymlinks(targetConfig.path, skillFolders);
+      for (const item of orphaned) {
+        allOrphaned.push({ ...item, targetName });
+      }
+    }
 
-      for (const { name, targetPath } of orphaned) {
+    // If there are orphaned symlinks, show them in a separate section
+    if (allOrphaned.length > 0) {
+      logger.section("Cleaning up orphaned symlinks");
+
+      for (const { name, targetPath, targetName } of allOrphaned) {
         try {
           if (dryRun) {
-            logger.info(`${pc.dim("orphaned")} ${name}: would remove from ${targetName}`);
+            logger.info(`${name}: would remove from ${targetName}`);
           } else {
             await unlink(targetPath);
-            logger.success(`${pc.dim("orphaned")} ${name}: removed from ${targetName}`);
+            logger.success(`${name}: removed from ${targetName}`);
           }
           removed++;
         } catch (error) {
           const message = error instanceof Error ? error.message : String(error);
-          logger.error(`${pc.dim("orphaned")} ${name}: failed to remove - ${message}`);
+          logger.error(`${name}: failed to remove from ${targetName} - ${message}`);
           errors++;
         }
       }
