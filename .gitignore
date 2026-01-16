@@ -6,3 +6,4 @@ dist/
 .env.local
 bun.lock
 .claude/
+
