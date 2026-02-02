@@ -22,6 +22,11 @@ export const PRESET_TARGETS: Record<string, TargetConfig> = {
     enabled: true,
     exclude: [],
   },
+  codex: {
+    path: "~/.codex/skills",
+    enabled: true,
+    exclude: [],
+  },
   gemini: {
     path: "~/.gemini/skills",
     enabled: true,
