@@ -142,7 +142,9 @@ skills-sync uninstall --purge   # Also remove ~/.skills-sync/ folder
 | Target | Path |
 |--------|------|
 | `claude` | `~/.claude/skills` |
+| `codex` | `~/.codex/skills` |
 | `gemini` | `~/.gemini/skills` |
+| `antigravity` | `~/.gemini/antigravity/skills` |
 | `opencode` | `~/.config/opencode/skill` |
 
 ## Configuration
@@ -156,6 +158,9 @@ targets:
     enabled: true
   gemini:
     path: ~/.gemini/skills
+    enabled: true
+  antigravity:
+    path: ~/.gemini/antigravity/skills
     enabled: true
   opencode:
     path: ~/.config/opencode/skill

@@ -32,6 +32,11 @@ export const PRESET_TARGETS: Record<string, TargetConfig> = {
     enabled: true,
     exclude: [],
   },
+  antigravity: {
+    path: "~/.gemini/antigravity/skills",
+    enabled: true,
+    exclude: [],
+  },
   opencode: {
     path: "~/.config/opencode/skill",
     enabled: true,
