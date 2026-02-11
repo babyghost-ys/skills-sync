@@ -1,6 +1,6 @@
 # skills-sync
 
-**⚠️ WARNING: Use this tool with caution. This has only been tested on macOS Tahoe 26.2 with OpenCode, Gemini CLI, and Claude Code CLI installed.**
+**⚠️ WARNING: Use this tool with caution. This has only been tested on macOS Tahoe 26.2 with OpenCode, OpenAI ChatGPT Codex, Gemini CLI, Google Antigravity and Claude Code CLI installed.**
 
 Synchronise AI coding assistant skills from a centralised location to multiple targets using symlinks.
 
