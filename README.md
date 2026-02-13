@@ -146,6 +146,7 @@ skills-sync uninstall --purge   # Also remove ~/.skills-sync/ folder
 | `gemini` | `~/.gemini/skills` |
 | `antigravity` | `~/.gemini/antigravity/skills` |
 | `opencode` | `~/.config/opencode/skill` |
+| `kilocode` | `~/.kilocode/skills` |
 
 ## Configuration
 
