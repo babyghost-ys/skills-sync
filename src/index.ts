@@ -8,6 +8,7 @@ import { runInit } from "./commands/init";
 import { runUninstall } from "./commands/uninstall";
 import { runExclude, runInclude } from "./commands/exclude";
 import { runAddTarget, runRemoveTarget, runListTargets } from "./commands/target";
+import { printBanner } from "./utils/banner";
 
 const program = new Command();
 
@@ -22,6 +23,7 @@ program
   .option("-d, --dry-run", "Show what would happen without making changes")
   .option("-f, --force", "Force replace existing symlinks pointing elsewhere")
   .action(async (options) => {
+    printBanner();
     await runSync({
       skill: options.skill,
       target: options.target,
@@ -35,6 +37,7 @@ program
   .command("status")
   .description("Show current sync status")
   .action(async () => {
+    printBanner();
     await runStatus();
   });
 
@@ -58,6 +61,7 @@ program
   .command("init")
   .description("Initialise config and source directory")
   .action(async () => {
+    printBanner();
     await runInit();
   });
 
@@ -111,5 +115,10 @@ program
   .action(() => {
     runListTargets();
   });
+
+const isHelp = process.argv.includes("-h") || process.argv.includes("--help");
+if (isHelp) {
+  printBanner();
+}
 
 program.parse();
