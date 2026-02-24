@@ -47,6 +47,11 @@ export const PRESET_TARGETS: Record<string, TargetConfig> = {
     enabled: true,
     exclude: [],
   },
+  cursor: {
+    path: "~/.cursor/skills",
+    enabled: true,
+    exclude: [],
+  },
 };
 
 const DEFAULT_CONFIG: Config = {
