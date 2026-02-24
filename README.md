@@ -1,12 +1,12 @@
 # skills-sync
 
-**⚠️ WARNING: Use this tool with caution. This has only been tested on macOS Tahoe 26.2 with OpenCode, OpenAI ChatGPT Codex, Gemini CLI, Google Antigravity and Claude Code CLI installed.**
+**⚠️ WARNING: Use this tool with caution. This has only been tested on macOS Tahoe 26.2 with OpenCode, OpenAI ChatGPT Codex, Gemini CLI, Google Antigravity, Claude Code CLI and Cursor installed.**
 
 Synchronise AI coding assistant skills from a centralised location to multiple targets using symlinks.
 
 ## Why?
 
-AI coding assistants like Claude Code, Gemini CLI, and OpenCode each have their own skills/instructions folder. Instead of duplicating your custom skills across multiple locations, `skills-sync` lets you maintain a single source of truth and sync to all targets automatically.
+AI coding assistants like Cursor, Claude Code, Gemini CLI, and OpenCode each have their own skills/instructions folder. Instead of duplicating your custom skills across multiple locations, `skills-sync` lets you maintain a single source of truth and sync to all targets automatically.
 
 ## Installation
 
@@ -147,6 +147,7 @@ skills-sync uninstall --purge   # Also remove ~/.skills-sync/ folder
 | `antigravity` | `~/.gemini/antigravity/skills` |
 | `opencode` | `~/.config/opencode/skill` |
 | `kilocode` | `~/.kilocode/skills` |
+| `cursor` | `~/.cursor/skills` |
 
 ## Configuration
 
